@@ -17,7 +17,7 @@
         </tab>
         <section id="magestat_signin_phone_number" showInDefault="1">
             <tab>magestat</tab>
-            <label>Sign in With Phone Number</label>
+            <label>Sign in with an alternative identifier</label>
             <resource>Magestat_SigninPhoneNumber::config</resource>
             <group id="module" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
                 <label>Enable Module</label>
@@ -28,9 +28,25 @@
             </group>
             <group id="options" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
                 <label>Settings</label>
+                <field id="user_may_edit_own_identifier" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Users may edit own alternate identifier</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="mode" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Sign in Mode</label>
                     <source_model>Magestat\SigninPhoneNumber\Model\Config\Source\SigninMode</source_model>
+                </field>
+                <field id="label_for_alternative_identifier" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Label for alternative Identifier (alternative Identifier Login Only)</label>
+                </field>
+                <field id="note_for_alternative_identifier" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Note for alternative Identifier (alternative Identifier Login Only)</label>
+                </field>
+                <field id="title_for_alternative_identifier" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title for alternative Identifier (alternative Identifier Login Only)</label>
+                </field>
+                <field id="edit_label_for_alternative_identifier" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Edit Label for alternative Identifier (alternative Login Only, customer edit allowed only)</label>
                 </field>
             </group>
         </section>

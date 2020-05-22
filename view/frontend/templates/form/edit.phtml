@@ -2,7 +2,7 @@
 /**
  * @see \Magento\Customer\Block\Form\Edit
  * @var \Magestat\SigninPhoneNumber\Block\Form\Edit $block
- * 
+ *
  * @codingStandardsIgnoreFile
  */
 ?>
@@ -52,6 +52,19 @@
                 <div class="control">
                     <input type="text" name="phone_number" id="phone-number" data-input="change-phone-number" value="<?= $block->escapeHtmlAttr($block->getPhoneNumber()) ?>" title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" class="input-text" data-validate="{required:true}"/>
                 </div>
+            <?php endif; ?>
+            <?php if ($block->isEnabled() && $block->isAlternateIdentifierMode()):?>
+                <?php if ($block->isAlternateIdentfierEditAllowed()):?>
+                    <br><label class="label" for="alterative-identifier"><span><?= $block->escapeHtml(__($block->getAlternativeIdentifierEditLabel())) ?></span></label>
+                    <div class="control">
+                        <input type="text" name="alterative_identifier" id="alterative-identifier" data-input="change-alterative-identifier" value="<?= $block->escapeHtmlAttr($block->getAlternativeIdentifier()) ?>" title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" class="input-text" data-validate="{required:true}"/>
+                    </div>
+                <?php else: ?>
+                    <br><label class="label" for="alterative-identifier"><span><?= $block->escapeHtml(__($block->getAlternativeIdentifierEditLabel())) ?></span></label>
+                    <div class="control">
+                        <input type="text" name="alterative_identifier" id="alterative-identifier" data-input="change-alterative-identifier" value="<?= $block->escapeHtmlAttr($block->getAlternativeIdentifier()) ?>" title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" class="input-text" data-validate="{required:true}"/>
+                    </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="field password current required">
@@ -105,7 +118,7 @@
     ], function($){
         var dataForm = $('#form-validate');
         var ignore = <?= /* @noEscape */ $_dob->isEnabled() ? '\'input[id$="full"]\'' : 'null' ?>;
-        
+
         dataForm.mage('validation', {
         <?php if ($_dob->isEnabled()): ?>
             errorPlacement: function(error, element) {

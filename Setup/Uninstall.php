@@ -25,7 +25,8 @@ class Uninstall implements UninstallInterface
      */
     public function __construct(
         EavSetupFactory $eavSetupFactory
-    ) {
+    )
+    {
         $this->eavSetupFactory = $eavSetupFactory;
     }
 
@@ -36,12 +37,15 @@ class Uninstall implements UninstallInterface
     public function uninstall(
         SchemaSetupInterface $setup,
         ModuleContextInterface $context
-    ) {
+    )
+    {
         // codingStandardsIgnoreEnd
         $setup->startSetup();
 
         $eavSetup = $this->eavSetupFactory->create();
-        $eavSetup->removeAttribute(Customer::ENTITY, InstallData::PHONE_NUMBER);
+        $eavSetup
+            ->removeAttribute(Customer::ENTITY, InstallData::PHONE_NUMBER)
+            ->removeAttribute(Customer::ENTITY, InstallData::ALTERNATIVE_IDENTIFIER);
 
         $setup->endSetup();
     }

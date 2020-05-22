@@ -189,7 +189,7 @@ class AccountManagement extends \Magento\Customer\Model\AccountManagement
         switch ($this->handlerSignin->getSigninMode()) {
             case SigninMode::TYPE_PHONE:
                 return $this->withPhoneNumber($username);
-            case SigninMode::TYPE_BOTH_OR:
+            case SigninMode::TYPE_PHONE_OR_MAIL:
                 return $this->withPhoneNumberOrEmail($username);
             default:
                 return $this->customerRepository->get($username);

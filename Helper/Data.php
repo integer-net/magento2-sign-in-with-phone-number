@@ -14,6 +14,7 @@ namespace Magestat\SigninPhoneNumber\Helper;
 
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magestat\SigninPhoneNumber\Model\Config\Source\SigninMode;
 
 /**
  * Configuration class.
@@ -34,6 +35,23 @@ class Data extends AbstractHelper
             $scopeCode
         );
     }
+
+
+    /**
+     * Are customers allowed to edit their alternate identifier
+     *
+     * @param string|null $scopeCode
+     * @return bool
+     */
+    public function isAlternateIdentifierEditAllowedForCustomer($scopeCode = null)
+    {
+        return (bool) $this->scopeConfig->isSetFlag(
+            'magestat_signin_phone_number/module/user_may_edit_own_identifier',
+            ScopeInterface::SCOPE_STORE,
+            $scopeCode
+        );
+    }
+
 
     /**
      * Sign in mode.

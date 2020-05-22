@@ -12,6 +12,7 @@
 
 namespace Magestat\SigninPhoneNumber\Block\Form;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Customer\Model\Session;
 use Magento\Customer\Model\Url;
@@ -30,6 +31,10 @@ class Login extends \Magento\Customer\Block\Form\Login
      * @var \Magestat\SigninPhoneNumber\Helper\Data
      */
     private $helperData;
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
 
     /**
      * @param Context $context
@@ -43,10 +48,12 @@ class Login extends \Magento\Customer\Block\Form\Login
         Session $customerSession,
         Url $customerUrl,
         HelperData $helperData,
+        ScopeConfigInterface $scopeConfig,
         array $data = []
     ) {
         parent::__construct($context, $customerSession, $customerUrl, $data);
         $this->helperData = $helperData;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -66,9 +73,11 @@ class Login extends \Magento\Customer\Block\Form\Login
             case SigninMode::TYPE_PHONE:
                 $mode = $this->modePhone();
                 break;
-            case SigninMode::TYPE_BOTH_OR:
-                $mode = $this->modeBoth();
+            case SigninMode::TYPE_PHONE_OR_MAIL:
+                $mode = $this->modePhoneOrMail();
                 break;
+            case SigninMode::TYPE_ALTERNATIVE_IDENT_OR_MAIL:
+                $mode = $this->modeAlternativeIdentfierOrMail();
         }
         return $this->addData($mode);
     }
@@ -94,7 +103,7 @@ class Login extends \Magento\Customer\Block\Form\Login
      *
      * @return array
      */
-    private function modeBoth()
+    private function modePhoneOrMail()
     {
         return [
             'note' => $this->escapeHtml(
@@ -102,6 +111,20 @@ class Login extends \Magento\Customer\Block\Form\Login
             ),
             'label' => $this->escapeHtml(__('Email Address or Phone Number')),
             'title' => $this->escapeHtmlAttr(__('Email or Phone'))
+        ];
+    }
+
+    private function modeAlternativeIdentfierOrMail()
+    {
+        $label = $this->scopeConfig->getValue('magestat_signin_phone_number/options/label_for_alternative_identifier');
+        $note = $this->scopeConfig->getValue('magestat_signin_phone_number/options/note_for_alternative_identifier');
+        $title = $this->scopeConfig->getValue('magestat_signin_phone_number/options/title_for_alternative_identifier');
+        return [
+            'note' => $this->escapeHtml(
+                __($note)
+            ),
+            'label' => $this->escapeHtml(__($label)),
+            'title' => $this->escapeHtmlAttr(__($title))
         ];
     }
 }

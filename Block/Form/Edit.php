@@ -14,9 +14,11 @@ namespace Magestat\SigninPhoneNumber\Block\Form;
 
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Customer\Model\Session;
 use Magento\Newsletter\Model\SubscriberFactory;
+use Magestat\SigninPhoneNumber\Model\Config\Source\SigninMode;
 use Magestat\SigninPhoneNumber\Setup\InstallData;
 use Magestat\SigninPhoneNumber\Helper\Data as HelperData;
 
@@ -33,6 +35,10 @@ class Edit extends \Magento\Customer\Block\Form\Edit
      * @var \Magestat\SigninPhoneNumber\Helper\Data
      */
     private $helperData;
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
 
     /**
      * @param Context $context
@@ -51,8 +57,10 @@ class Edit extends \Magento\Customer\Block\Form\Edit
         CustomerRepositoryInterface $customerRepository,
         AccountManagementInterface $customerAccountManagement,
         HelperData $helperData,
+        ScopeConfigInterface $scopeConfig,
         array $data = []
-    ) {
+    )
+    {
         parent::__construct(
             $context,
             $customerSession,
@@ -62,6 +70,7 @@ class Edit extends \Magento\Customer\Block\Form\Edit
             $data
         );
         $this->helperData = $helperData;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -70,6 +79,11 @@ class Edit extends \Magento\Customer\Block\Form\Edit
     public function isEnabled()
     {
         return $this->helperData->isActive();
+    }
+
+    public function isAlternateIdentfierEditAllowed()
+    {
+        return $this->helperData->isAlternateIdentifierEditAllowedForCustomer();
     }
 
     /**
@@ -81,6 +95,23 @@ class Edit extends \Magento\Customer\Block\Form\Edit
     {
         $phoneAttribute = $this->getCustomer()
             ->getCustomAttribute(InstallData::PHONE_NUMBER);
-        return $phoneAttribute ? (string) $phoneAttribute->getValue() : '';
+        return $phoneAttribute ? (string)$phoneAttribute->getValue() : '';
+    }
+
+    public function getAlternativeIdentifier()
+    {
+        $alternativeIdentifierAttribute = $this->getCustomer()
+            ->getCustomAttribute(InstallData::ALTERNATIVE_IDENTIFIER);
+        return $alternativeIdentifierAttribute ? (string)$alternativeIdentifierAttribute->getValue() : '';
+    }
+
+    public function getAlternativeIdentifierEditLabel()
+    {
+        $this->scopeConfig->getValue('magestat_signin_phone_number/options/edit_label_for_alternative_identifier');
+    }
+
+    public function isAlternateIdentifierMode()
+    {
+        return $this->helperData->getSigninMode() === SigninMode::TYPE_ALTERNATIVE_IDENT_OR_MAIL;
     }
 }

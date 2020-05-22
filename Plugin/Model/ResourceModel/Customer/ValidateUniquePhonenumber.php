@@ -42,7 +42,8 @@ class ValidateUniquePhonenumber
     public function __construct(
         CustomerCollectionFactory $customerCollectionFactory,
         Config $config
-    ) {
+    )
+    {
         $this->customerCollectionFactory = $customerCollectionFactory;
         $this->config = $config;
     }
@@ -65,12 +66,12 @@ class ValidateUniquePhonenumber
             ->create()
             ->addAttributeToFilter(InstallData::PHONE_NUMBER, $customer->getData(InstallData::PHONE_NUMBER));
 
-        // If the customer already exists, exclude them from the query
+        // If the customer already exists, exclude them from the queryValidateUniquePhonenumber.php
         if ($customer->getId()) {
             $collection->addAttribuTeToFilter(
                 'entity_id',
                 [
-                    'neq' => (int) $customer->getId(),
+                    'neq' => (int)$customer->getId(),
                 ]
             );
         }

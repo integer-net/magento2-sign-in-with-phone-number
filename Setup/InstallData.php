@@ -3,6 +3,7 @@
 namespace Magestat\SigninPhoneNumber\Setup;
 
 use Magento\Customer\Model\Customer;
+use Magento\Customer\Setup\CustomerSetup;
 use Magento\Customer\Setup\CustomerSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\InstallDataInterface;
@@ -18,6 +19,11 @@ class InstallData implements InstallDataInterface
      * @var string Customer Phone Number attribute.
      */
     const PHONE_NUMBER = 'phone_number';
+
+    /**
+     * @var string Customer Alternative Identifier Attribute.
+     */
+    const ALTERNATIVE_IDENTIFIER = 'alternative_identifier';
 
     /**
      * @var CustomerSetupFactory
@@ -44,7 +50,7 @@ class InstallData implements InstallDataInterface
         // codingStandardsIgnoreEnd
         $setup->startSetup();
 
-        /** @var CustomerSetupFactory $customerSetup **/
+        /** @var CustomerSetup $customerSetup **/
         $customerSetup = $this->customerSetupFactory->create(['setup' => $setup]);
         $customerSetup->addAttribute(
             Customer::ENTITY,
@@ -62,12 +68,24 @@ class InstallData implements InstallDataInterface
                 'is_filterable_in_grid' => true,
                 'is_searchable_in_grid' => true
             ]
+        )->addAttribute(
+            Customer::ENTITY,
+            self::ALTERNATIVE_IDENTIFIER,
+            [
+                'label' => 'Alternative Identifier for Sign In',
+                'input' => 'text',
+                'required' => true,
+                'sort_order' => 1000,
+                'visible' => true,
+                'system' => false,
+                'unique' => true,
+                'is_used_in_grid' => true,
+                'is_visible_in_grid' => true,
+                'is_filterable_in_grid' => true,
+                'is_searchable_in_grid' => true
+            ]
         );
         /** @var $attribute */
-        $attribute = $customerSetup->getEavConfig()->getAttribute(
-            Customer::ENTITY,
-            self::PHONE_NUMBER
-        );
         $usedInForms = [
             'adminhtml_customer',
             'checkout_register',
@@ -75,6 +93,22 @@ class InstallData implements InstallDataInterface
             'customer_account_edit',
             'adminhtml_checkout'
         ];
+
+        $attribute = $customerSetup->getEavConfig()->getAttribute(
+            Customer::ENTITY,
+            self::PHONE_NUMBER
+        );
+        $attribute->setData('used_in_forms', $usedInForms)
+            ->setData('is_used_for_customer_segment', true)
+            ->setData('is_system', 0)
+            ->setData('is_user_defined', 1);
+
+        $attribute->save();
+
+        $attribute = $customerSetup->getEavConfig()->getAttribute(
+            Customer::ENTITY,
+            self::ALTERNATIVE_IDENTIFIER
+        );
         $attribute->setData('used_in_forms', $usedInForms)
             ->setData('is_used_for_customer_segment', true)
             ->setData('is_system', 0)

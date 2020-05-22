@@ -25,7 +25,7 @@ interface SigninInterface
      * @return bool
      */
     public function isEnabled($scopeCode);
-    
+
     /**
      * @see \Magestat\SigninPhoneNumber\Helper\Data\Helper
      * @param string|null $scopeCode
