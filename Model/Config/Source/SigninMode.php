@@ -19,9 +19,14 @@ class SigninMode
     const TYPE_PHONE_OR_MAIL = 2;
 
     /**
-     * @var int Value using phone or email to sign in.
+     * @var int Value using alternative identfier or email to sign in.
      */
-    const TYPE_ALTERNATIVE_IDENT_OR_MAIL = 3;
+    const TYPE_ALTERNATIVE_IDENT = 3;
+
+    /**
+     * @var int Value using alternative indetifier or email to sign in.
+     */
+    const TYPE_ALTERNATIVE_IDENT_OR_MAIL = 4;
 
     /**
      * Retrieve possible sign in options.
@@ -33,7 +38,8 @@ class SigninMode
         return [
             self::TYPE_PHONE => __('Sign in Only With Phone and Password'),
             self::TYPE_PHONE_OR_MAIL => __('Sign in With Phone/Email and Password'),
-            self::TYPE_ALTERNATIVE_IDENT_OR_MAIL => __('Sign in With alternative Identification/Email and Password'),
+            self::TYPE_ALTERNATIVE_IDENT_OR_MAIL => __('Sign in with alternative identification/Email and Password'),
+            self::TYPE_ALTERNATIVE_IDENT => __('Sign in with alternative Identification and Password')
         ];
     }
 }

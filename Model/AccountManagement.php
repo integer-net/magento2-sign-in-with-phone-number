@@ -191,6 +191,10 @@ class AccountManagement extends \Magento\Customer\Model\AccountManagement
                 return $this->withPhoneNumber($username);
             case SigninMode::TYPE_PHONE_OR_MAIL:
                 return $this->withPhoneNumberOrEmail($username);
+            case SigninMode::TYPE_ALTERNATIVE_IDENT_OR_MAIL:
+                return $this->withAlternativeIdentifierOrEmail($username);
+            case SigninMode::TYPE_ALTERNATIVE_IDENT:
+                return $this->withAlternativeIdentifier($username);
             default:
                 return $this->customerRepository->get($username);
         }
@@ -213,14 +217,49 @@ class AccountManagement extends \Magento\Customer\Model\AccountManagement
     }
 
     /**
+     * Action to login with Phone Number only.
+     *
+     * @param string $username
+     * @return CustomerInterface
+     * @throws NoSuchEntityException
+     */
+    private function withAlternativeIdentifier(string $username)
+    {
+        $customer = $this->handlerSignin->getByAlternativeIdentifier($username);
+        if (false == $customer) {
+            throw new NoSuchEntityException();
+        }
+        return $customer;
+    }
+
+    /**
      * Action to login with Phone Number or Email.
      *
      * @param string $username
      * @return CustomerInterface
+     * @throws NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function withPhoneNumberOrEmail(string $username)
     {
         $customer = $this->handlerSignin->getByPhoneNumber($username);
+        if (false == $customer) {
+            return $this->customerRepository->get($username);
+        }
+        return $customer;
+    }
+
+    /**
+     * Action to login with Phone Number or Email.
+     *
+     * @param string $username
+     * @return CustomerInterface
+     * @throws NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    private function withAlternativeIdentifierOrEmail(string $username)
+    {
+        $customer = $this->handlerSignin->getByAlternativeIdentifier($username);
         if (false == $customer) {
             return $this->customerRepository->get($username);
         }

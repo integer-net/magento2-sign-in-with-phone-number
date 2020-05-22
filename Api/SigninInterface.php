@@ -40,4 +40,12 @@ interface SigninInterface
      * @return boolean|object
      */
     public function getByPhoneNumber(string $phone);
+
+    /**
+     * Load customer object by alternativeIdentfierAttribute.
+     *
+     * @param string $alternativeIdentifier
+     * @return boolean|object
+     */
+    public function getByAlternativeIdentifier(string $alternativeIdentifier);
 }

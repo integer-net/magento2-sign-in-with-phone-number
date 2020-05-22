@@ -110,6 +110,37 @@ class Signin implements SigninInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getByAlternativeIdentifier(string $alternativeIdentfier)
+    {
+        $websiteIdFilter[] = $this->filterWebsiteShare();
+
+        // Add customer attribute filter
+        $customerFilter[] = $this->filterBuilder
+            ->setField(\Magestat\SigninPhoneNumber\Setup\InstallData::ALTERNATIVE_IDENTIFIER)
+            ->setConditionType('eq')
+            ->setValue($alternativeIdentfier)
+            ->create();
+
+        // Build search criteria
+        $searchCriteriaBuilder = $this->searchCriteriaBuilder->addFilters($customerFilter);
+        if (!empty($websiteIdFilter)) {
+            $searchCriteriaBuilder->addFilters($websiteIdFilter);
+        }
+        $searchCriteria = $searchCriteriaBuilder->create();
+
+        // Retrieve customer collection.
+        $collection = $this->customerRepository->getList($searchCriteria);
+        if ($collection->getTotalCount() == 1) {
+            // Return first occurrence.
+            $accounts = $collection->getItems();
+            return reset($accounts);
+        }
+        return false;
+    }
+
+    /**
      * Add website filter if customer accounts are shared per website.
      *
      * @return FilterBuilder|boolean

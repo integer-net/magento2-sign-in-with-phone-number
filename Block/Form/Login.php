@@ -77,7 +77,9 @@ class Login extends \Magento\Customer\Block\Form\Login
                 $mode = $this->modePhoneOrMail();
                 break;
             case SigninMode::TYPE_ALTERNATIVE_IDENT_OR_MAIL:
-                $mode = $this->modeAlternativeIdentfierOrMail();
+                $mode = $this->modeAlternativeIdentfier();
+            case SigninMode::TYPE_ALTERNATIVE_IDENT:
+                $mode = $this->modeAlternativeIdentfier();
         }
         return $this->addData($mode);
     }
@@ -114,7 +116,7 @@ class Login extends \Magento\Customer\Block\Form\Login
         ];
     }
 
-    private function modeAlternativeIdentfierOrMail()
+    private function modeAlternativeIdentfier()
     {
         $label = $this->scopeConfig->getValue('magestat_signin_phone_number/options/label_for_alternative_identifier');
         $note = $this->scopeConfig->getValue('magestat_signin_phone_number/options/note_for_alternative_identifier');

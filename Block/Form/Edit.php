@@ -46,6 +46,8 @@ class Edit extends \Magento\Customer\Block\Form\Edit
      * @param SubscriberFactory $subscriberFactory
      * @param CustomerRepositoryInterface $customerRepository
      * @param AccountManagementInterface $customerAccountManagement
+     * @param HelperData $helperData
+     * @param ScopeConfigInterface $scopeConfig
      * @param array $data
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -107,11 +109,12 @@ class Edit extends \Magento\Customer\Block\Form\Edit
 
     public function getAlternativeIdentifierEditLabel()
     {
-        $this->scopeConfig->getValue('magestat_signin_phone_number/options/edit_label_for_alternative_identifier');
+        return $this->scopeConfig->getValue('magestat_signin_phone_number/options/edit_label_for_alternative_identifier');
     }
 
     public function isAlternateIdentifierMode()
     {
-        return $this->helperData->getSigninMode() === SigninMode::TYPE_ALTERNATIVE_IDENT_OR_MAIL;
+        //compares string to int
+        return $this->helperData->getSigninMode() == SigninMode::TYPE_ALTERNATIVE_IDENT_OR_MAIL || $this->helperData->getSigninMode() == SigninMode::TYPE_ALTERNATIVE_IDENT;
     }
 }
