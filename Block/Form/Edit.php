@@ -20,7 +20,7 @@ use Magento\Customer\Model\Session;
 use Magento\Newsletter\Model\SubscriberFactory;
 use Magestat\SigninPhoneNumber\Model\Config\Source\SigninMode;
 use Magestat\SigninPhoneNumber\Setup\InstallData;
-use Magestat\SigninPhoneNumber\Helper\Data as HelperData;
+use Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper as HelperData;
 
 /**
  * Customer edit form block
@@ -32,7 +32,7 @@ use Magestat\SigninPhoneNumber\Helper\Data as HelperData;
 class Edit extends \Magento\Customer\Block\Form\Edit
 {
     /**
-     * @var \Magestat\SigninPhoneNumber\Helper\Data
+     * @var \Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper
      */
     private $helperData;
     /**

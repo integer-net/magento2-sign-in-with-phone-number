@@ -21,7 +21,7 @@ use Magento\Directory\Model\ResourceModel\Country\CollectionFactory as CountryFa
 use Magento\Framework\Module\Manager;
 use Magento\Customer\Model\Session;
 use Magento\Customer\Model\Url;
-use Magestat\SigninPhoneNumber\Helper\Data as HelperData;
+use Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper as HelperData;
 
 /**
  * Customer register form block
@@ -33,7 +33,7 @@ use Magestat\SigninPhoneNumber\Helper\Data as HelperData;
 class Register extends \Magento\Customer\Block\Form\Register
 {
     /**
-     * @var \Magestat\SigninPhoneNumber\Helper\Data
+     * @var \Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper
      */
     private $helperData;
 

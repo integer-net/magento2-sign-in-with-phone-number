@@ -15,7 +15,7 @@ use Magento\Customer\Model\Customer;
 use Magento\Customer\Model\ResourceModel\Customer as ResourceModel;
 use Magento\Customer\Model\ResourceModel\Customer\CollectionFactory as CustomerCollectionFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magestat\SigninPhoneNumber\Helper\Data as Config;
+use Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper as Config;
 use Magestat\SigninPhoneNumber\Setup\InstallData;
 
 /**

@@ -8,7 +8,7 @@ use Magento\Framework\Api\FilterBuilder;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Config\Share as ConfigShare;
 use Magestat\SigninPhoneNumber\Api\SigninInterface;
-use Magestat\SigninPhoneNumber\Helper\Data as HelperData;
+use Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper as HelperData;
 
 /**
  * Class Signin

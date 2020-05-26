@@ -16,7 +16,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Customer\Model\Session;
 use Magento\Customer\Model\Url;
-use Magestat\SigninPhoneNumber\Helper\Data as HelperData;
+use Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper as HelperData;
 use Magestat\SigninPhoneNumber\Model\Config\Source\SigninMode;
 
 /**
@@ -28,7 +28,7 @@ use Magestat\SigninPhoneNumber\Model\Config\Source\SigninMode;
 class Login extends \Magento\Customer\Block\Form\Login
 {
     /**
-     * @var \Magestat\SigninPhoneNumber\Helper\Data
+     * @var \Magestat\SigninPhoneNumber\Helper\AlternateIdentifierModuleStateHelper
      */
     private $helperData;
     /**
